@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -29,10 +29,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleValidationExceptions(final MethodArgumentNotValidException ex) {
-        return  ex.getBindingResult()
-                .getAllErrors()
+        return ex.getBindingResult().getAllErrors()
                 .stream()
-                .map(error -> new AbstractMap.SimpleEntry<>(((FieldError) error).getField(), error.getDefaultMessage()))
-                .collect(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue));
+                .map(FieldError.class::cast)
+                .collect(
+                        Collectors.toMap(
+                                FieldError::getField,
+                                fieldError -> Optional.ofNullable(fieldError.getDefaultMessage())
+                                        .orElse("Validation error occurred"),
+                                (v1, v2) -> v2 + " and " + v1
+                        )
+                );
     }
 }
