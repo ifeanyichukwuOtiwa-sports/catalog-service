@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
                                 FieldError::getField,
                                 fieldError -> Optional.ofNullable(fieldError.getDefaultMessage())
                                         .orElse("Validation error occurred"),
-                                (v1, v2) -> v2 + " and " + v1
+                                (v1, v2) -> v2 + "; " + v1
                         )
                 );
     }
