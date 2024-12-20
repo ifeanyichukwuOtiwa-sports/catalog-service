@@ -21,7 +21,7 @@ jobs:
           cache: gradle
 
       - name: Code Vulnerability Scanner
-        uses: anchore/scan-action@v3
+        uses: anchore/scan-action@v6
         id: scan
         with:
           path: "${{ github.workspace }}"
