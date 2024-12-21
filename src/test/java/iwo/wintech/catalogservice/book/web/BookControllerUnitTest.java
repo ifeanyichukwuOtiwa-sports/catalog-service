@@ -15,6 +15,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(
         controllers = {
                 BookController.class
+        },
+        properties = {
+                "spring.cloud.config.fail-fast=false"
         }
 )
 class BookControllerUnitTest {

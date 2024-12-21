@@ -11,7 +11,12 @@ import java.math.BigDecimal;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = {
+                "spring.cloud.config.fail-fast=false"
+        }
+)
 class BookUseCaseIntegrationTest {
 
     @Autowired

@@ -13,7 +13,8 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = {
-                "polar.greeting=Hello Test World"
+                "polar.greeting=Hello Test World",
+                "spring.cloud.config.fail-fast=false"
         }
 )
 @ContextConfiguration(classes = {
