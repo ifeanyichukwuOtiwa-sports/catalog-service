@@ -1,7 +1,13 @@
 package iwo.wintech.catalogservice.config;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+@Setter
+@Getter
+@ToString
 @ConfigurationProperties(prefix = "polar")
 public class PolarProperties {
     /**
@@ -13,11 +19,4 @@ public class PolarProperties {
         this.greeting = greeting;
     }
 
-    public String getGreeting() {
-        return greeting;
-    }
-
-    public void setGreeting(String greeting) {
-        this.greeting = greeting;
-    }
 }

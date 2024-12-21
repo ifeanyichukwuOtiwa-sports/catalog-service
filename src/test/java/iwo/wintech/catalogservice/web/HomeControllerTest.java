@@ -3,20 +3,29 @@ package iwo.wintech.catalogservice.web;
 import iwo.wintech.catalogservice.CatalogServiceApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.client.RestClient;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = {
+                "polar.greeting=Hello Test World"
+        }
+)
 @ContextConfiguration(classes = {
         CatalogServiceApplication.class,
         WebTextConfiguration.class
 })
 class HomeControllerTest {
     @Autowired
-    RestClient client;
+    private RestClient client;
+
+    @Value("${polar.greeting}")
+    private String property;
 
     @Test
     void getGreeting() {
@@ -25,6 +34,6 @@ class HomeControllerTest {
                 .retrieve()
                 .body(String.class);
 
-        assertThat(response).contains("|Welcome To Book Catalog");
+        assertThat(response).contains(property);
     }
 }

@@ -57,3 +57,7 @@ tasks {
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs << "-parameters"
 }
+
+bootRun {
+    systemProperties(Map.of("spring.profiles.active", "testdata"))
+}
