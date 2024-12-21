@@ -10,4 +10,4 @@ spring:
   application:
     name: catalog-service
 polar:
-  greeting: Welcome to Local Book Catalog
+  greeting: Welcome to the Local Book Catalog!
