@@ -21,6 +21,9 @@ public record BookSaveRequest(
         String author,
 
         @Positive(message = "Book price must be greater than zero")
-        BigDecimal price
+        BigDecimal price,
+
+        @NotBlank(message = "publisher must be valid")
+        String publisher
 ) {
 }

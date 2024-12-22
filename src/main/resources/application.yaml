@@ -16,12 +16,28 @@ spring:
       uri: http://localhost:9000
       request-connect-timeout: 5000
       request-read-timeout: 5000
-      fail-fast: true
+      fail-fast: false
       retry:
         initial-interval: 1000
         max-attempts: 6
         max-interval: 2000
         multiplier: 1.1
+
+
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/polardb_catalog
+    username: user
+    password: password
+#    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      connection-timeout: 2000
+
+  sql:
+    init:
+      mode: always
 
 management:
   endpoints:

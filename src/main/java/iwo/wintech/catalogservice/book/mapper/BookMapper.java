@@ -9,15 +9,16 @@ import lombok.experimental.UtilityClass;
 public class BookMapper {
 
     public static BookDto fromBook(Book book) {
-        return new BookDto(book.title() , book.author(), book.price(), book.isbn());
+        return new BookDto(book.title() , book.author(), book.price(), book.isbn(), book.publisher());
     }
 
     public static Book toBook(final BookSaveRequest req) {
-        return new Book(
+        return Book.of(
                 req.isbn(),
                 req.title(),
                 req.author(),
-                req.price()
+                req.price(),
+                req.publisher()
         );
     }
 }

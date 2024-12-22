@@ -6,6 +6,7 @@ public record BookDto(
         String title,
         String author,
         BigDecimal price,
-        String isbn
+        String isbn,
+        String publisher
 ) {
 }

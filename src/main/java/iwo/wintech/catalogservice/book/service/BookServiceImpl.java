@@ -72,7 +72,8 @@ public class BookServiceImpl implements BookService {
                 isbn,
                 book.title(),
                 book.author(),
-                book.price()
+                book.price(),
+                book.publisher()
         );
     }
 }

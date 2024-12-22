@@ -26,6 +26,7 @@ repositories {
 
 ext {
     set('springCloudVersion', "2024.0.0")
+    set('testContainerVersion', "1.20.4")
 }
 
 dependencies {
@@ -38,6 +39,13 @@ dependencies {
     implementation 'org.springframework.retry:spring-retry'
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+    implementation 'org.flywaydb:flyway-database-postgresql'
+
+
+    runtimeOnly 'org.postgresql:postgresql'
 
 
 //    implementation 'org.springframework.boot:spring-boot-starter-logging'
@@ -57,6 +65,10 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation(('org.springframework.boot:spring-boot-starter-webflux'))
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    testImplementation "org.testcontainers:postgresql"
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
 
 
 //    add('mockitoAgent', 'org.mockito:mockito-core') { transitive = false}
@@ -80,5 +92,6 @@ bootRun {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "org.testcontainers:testcontainers-bom:${testContainerVersion}"
     }
 }
