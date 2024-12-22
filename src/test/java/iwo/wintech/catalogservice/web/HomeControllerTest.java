@@ -1,6 +1,7 @@
 package iwo.wintech.catalogservice.web;
 
 import iwo.wintech.catalogservice.CatalogServiceApplication;
+import iwo.wintech.catalogservice.DataTestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +20,8 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 )
 @ContextConfiguration(classes = {
         CatalogServiceApplication.class,
-        WebTextConfiguration.class
+        WebTextConfiguration.class,
+        DataTestConfig.class
 })
 class HomeControllerTest {
     @Autowired
