@@ -1,14 +1,15 @@
 name: Build Image And Push To Registry
 on:
   push:
-    branches:
-      - develop
     paths:
       - my-java-image/Dockerfile
 
 jobs:
   build-and-push:
-    runs-on: ubuntu:22.04
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      security-events: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
