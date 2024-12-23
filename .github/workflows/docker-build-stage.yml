@@ -8,6 +8,7 @@ on:
 
 jobs:
   build-and-push:
+    name: Docker Build Image And Push To Registry
     runs-on: ubuntu-22.04
     permissions:
       contents: read
