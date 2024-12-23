@@ -1,8 +1,8 @@
 name: Build Image And Push To Registry
 on:
   push:
-    paths:
-      - 'my-java-image/**'
+    branches: ['develop']
+    paths: ['./my-java-image/**']
 
 jobs:
   build-and-push:

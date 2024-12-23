@@ -1,8 +1,7 @@
 name: Commit Stage
 on:
   push:
-    paths-ignore:
-      - 'my-java-image/**'
+    paths-ignore: ['my-java-image/**']
 
 
 jobs:
