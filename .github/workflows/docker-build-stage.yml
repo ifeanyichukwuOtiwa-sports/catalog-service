@@ -29,7 +29,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./my-java-image/.
           push: true
           tags: ghcr.io/ifeanyichukwuotiwa-sports/my-java-image:1.0.0
 #          tags: ghcr.io/ifeanyichukwuotiwa-sports/<YOUR_REPO>/<YOUR_IMAGE>:<TAG>
