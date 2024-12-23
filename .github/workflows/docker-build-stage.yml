@@ -1,10 +1,10 @@
 name: Build Image And Push To Registry
-on:
-  schedule:
-    - cron: '*/8 * * * *'
-  push:
-    branches: ['develop']
-    paths: ['./my-java-image/**']
+on: push
+#  schedule:
+#    - cron: '*/8 * * * *'
+#  push:
+#    branches: ['develop']
+#    paths: ['./my-java-image/**']
 
 jobs:
   build-and-push:
