@@ -97,12 +97,15 @@ dependencyManagement {
 }
 
 bootBuildImage {
-    imageName = "${project.name}"
+    imageName = "${ project.name }"
     environment = ["BP_JVM_VERSION" : "21.*"]
+    labels = [
+            "org.opencontainers.image.source": "${ vcs_provider }/${ vcs_owner }/${ repository }"
+    ]
 
     docker {
         publishRegistry {
-            imageName = "ghcr.io/ifeanyichukwuotiwa-sports/${project.name}"
+            imageName = "${ container_registry }/${ vcs_owner }/${ project.name }"
             username = project.findProperty("registryUsername")
             password = project.findProperty("registryToken")
             url = project.findProperty("registryUrl")
