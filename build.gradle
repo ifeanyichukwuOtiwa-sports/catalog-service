@@ -56,6 +56,8 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation 'ch.qos.logback:logback-core:1.5.15'
+    implementation 'ch.qos.logback:logback-classic:1.5.15'
 
     testCompileOnly('org.projectlombok:lombok')
     testAnnotationProcessor('org.projectlombok:lombok')
@@ -99,7 +101,7 @@ dependencyManagement {
 bootBuildImage {
     imageName = "${ project.name }"
     environment = ["BP_JVM_VERSION" : "21.*",
-                   "BP_IMAGE_LABELS": "org.opencontainers.image.source=${ vcs_provider }/${ vcs_owner }/${ repository }"
+                   "BP_IMAGE_LABELS": "org.opencontainers.image.source=${ vcs_provider }/${ vcs_owner }/${ repository } org.opencontainers.image.description=${project.name}-Image"
     ]
 
     docker {
