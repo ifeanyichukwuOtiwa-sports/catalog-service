@@ -2,27 +2,34 @@
 
 # #STAGE1
 FROM eclipse-temurin:21 AS builder
+
+RUN apt-get update  \
+    && apt-get upgrade -y &&  \
+    useradd spring #security
+
 WORKDIR /workspace
 
 ARG JAR_FILE=build/libs/*.jar
 
 COPY ${JAR_FILE} catalog-service.jar
 
-RUN java -Djarmode=layertools -jar catalog-service.jar extract
+RUN java -Djarmode=tools -jar catalog-service.jar extract --layers --destination extracted
 
 # #STAGE 2
 
 FROM eclipse-temurin:21
 
 RUN useradd spring #security
+
 USER spring
 
 WORKDIR /workspace
-COPY --from=builder /workspace/dependencies/ ./
-COPY --from=builder /workspace/spring-boot-loader/ ./
-COPY --from=builder /workspace/snapshot-dependencies/ ./
-COPY --from=builder /workspace/application/ ./
+
+COPY --from=builder /workspace/extracted/dependencies/ ./
+COPY --from=builder /workspace/extracted/spring-boot-loader/ ./
+COPY --from=builder /workspace/extracted/snapshot-dependencies/ ./
+COPY --from=builder /workspace/extracted/application/ ./
 
 RUN ls ./lib || true
 
-ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
+ENTRYPOINT ["java", "-jar", "catalog-service.jar"]
