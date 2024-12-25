@@ -99,6 +99,7 @@ dependencyManagement {
 }
 
 bootBuildImage {
+    builder = "docker.io/paketobuildpacks/builder-jammy-base"
     imageName = "${ project.name }"
     environment = ["BP_JVM_VERSION" : "21.*",
                    "BP_IMAGE_LABELS": "org.opencontainers.image.source=${ vcs_provider }/${ vcs_owner }/${ repository } org.opencontainers.image.description=${project.name}-Image"
