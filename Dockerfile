@@ -30,6 +30,4 @@ COPY --from=builder /workspace/extracted/spring-boot-loader/ ./
 COPY --from=builder /workspace/extracted/snapshot-dependencies/ ./
 COPY --from=builder /workspace/extracted/application/ ./
 
-RUN ls ./lib || true
-
 ENTRYPOINT ["java", "-jar", "catalog-service.jar"]
