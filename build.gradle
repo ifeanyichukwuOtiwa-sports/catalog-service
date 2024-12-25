@@ -98,9 +98,8 @@ dependencyManagement {
 
 bootBuildImage {
     imageName = "${ project.name }"
-    environment = ["BP_JVM_VERSION" : "21.*"]
-    labels = [
-            "org.opencontainers.image.source": "${ vcs_provider }/${ vcs_owner }/${ repository }"
+    environment = ["BP_JVM_VERSION" : "21.*",
+                   "BP_IMAGE_LABELS": "org.opencontainers.image.source=${ vcs_provider }/${ vcs_owner }/${ repository }"
     ]
 
     docker {
