@@ -1,5 +1,5 @@
 name: Build Image And Push To Registry
-on: push
+on: release
 #  schedule:
 #    - cron: '*/8 * * * *'
 #  push:

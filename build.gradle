@@ -95,3 +95,17 @@ dependencyManagement {
         mavenBom "org.testcontainers:testcontainers-bom:${testContainerVersion}"
     }
 }
+
+bootBuildImage {
+    imageName = "${project.name}"
+    environment = ["BP_JVM_VERSION" : "21.*"]
+
+    docker {
+        publishRegistry {
+            imageName = "ghcr.io/ifeanyichukwuotiwa-sports/${project.name}"
+            username = project.findProperty("registryUsername")
+            password = project.findProperty("registryToken")
+            url = project.findProperty("registryUrl")
+        }
+    }
+}
