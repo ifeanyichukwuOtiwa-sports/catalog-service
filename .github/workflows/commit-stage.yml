@@ -72,13 +72,13 @@ jobs:
         id: BDI
         run: |
           chmod +x gradlew
-          ./gradlew clean bootBuildImage --imageName ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          ./gradlew clean bootBuildImage --imageName ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
 
       - name: OCI Image Vulnerability Scanning
         uses: anchore/scan-action@v6
         id: scan
         with:
-          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
           fail-build: false
           severity-cutoff: high
 
@@ -97,4 +97,4 @@ jobs:
 
       - name: Publish Image to Registry
         run: |
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ env.SERVICE_NAME }}:${{ env.VERSION }}
