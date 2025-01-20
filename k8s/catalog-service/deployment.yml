@@ -28,7 +28,7 @@ spec:
             - name: BPL_JVM_THREAD_COUNT
               value: "50"
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://polar-postgres:5432/polardb_catalog
+              value: jdbc:postgresql://polar-catalog-postgres:5432/polardb_catalog
             - name: SPRING_PROFILES_ACTIVE
               value: testdata
             - name: SPRING_CLOUD_CONFIG_URI

@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: polar-postgres
+  name: polar-catalog-postgres
   labels:
-    db: polar-postgres
+    db: polar-catalog-postgres
 spec:
   type: ClusterIP
   selector:
-    db: polar-postgres
+    db: polar-catalog-postgres
   ports:
     - name: http
       protocol: TCP

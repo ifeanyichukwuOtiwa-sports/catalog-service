@@ -1,12 +1,15 @@
 version: "3.8"
 
+name: "Polar-Enterprise"
+
 services:
   catalog-service:
     depends_on:
       config-service:
         condition: service_healthy
-      polar-postgres:
-        condition: service_completed_successfully
+      polar-catalog-postgres:
+        condition: service_healthy
+        required: true
     image: catalog-service
     container_name: "catalog-service"
     ports:
@@ -16,22 +19,69 @@ services:
       - BPL_JVM_THREAD_COUNT=50
       - BPL_DEBUG_ENABLED=true
       - BPL_DEBUG_PORT=8001
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://polar-postgres:5432/polardb_catalog
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://polar-catalog-postgres:5432/polardb_catalog
       - SPRING_PROFILES_ACTIVE=testdata
       - SPRING_CLOUD_CONFIG_URI=http://config-service:9000
 
-  polar-postgres:
+  order-service:
+    depends_on:
+      catalog-service:
+        condition: service_started
+      polar-order-postgres:
+        condition: service_healthy
+        required: true
+    image: order-service
+    container_name: "order-service"
+    ports:
+      - "9002:9002"
+      - "8002:8002"
+    environment:
+      - BPL_JVM_THREAD_COUNT=50
+      - BPL_DEBUG_ENABLED=true
+      - BPL_DEBUG_PORT=8002
+      - SPRING_R2DBC_URL=r2dbc:postgresql://polar-order-postgres:5432/polardb_order
+      - SPRING_FLYWAY_URL=jdbc:postgresql://polar-order-postgres:5432/polardb_order
+      - SPRING_CLOUD_CONFIG_URI=http://config-service:9000
+      - POLAR_CATALOG_SERVICE_URI=http://catalog-service:9001
+
+  polar-catalog-postgres:
     depends_on:
       config-service:
         condition: service_healthy
     image: "postgres:14.4"
-    container_name: "polar-postgres"
+    container_name: "polar-catalog-postgres"
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=polardb_catalog
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U user -d polardb_catalog -c 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  polar-order-postgres:
+    depends_on:
+      config-service:
+        condition: service_healthy
+      polar-catalog-postgres:
+        condition: service_started
+    image: "postgres:14.4"
+    container_name: "polar-order-postgres"
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=polardb_order
+    healthcheck:
+      test: [ "CMD-SHELL", "psql -U user -d polardb_order -c 'SELECT 1' || exit 1" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      
 
   config-service:
     image: config-service

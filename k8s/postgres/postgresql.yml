@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: polar-postgres
+  name: polar-catalog-postgres
   labels:
-    db: polar-postgres
+    db: polar-catalog-postgres
 spec:
   selector:
     matchLabels:
-      db: polar-postgres
+      db: polar-catalog-postgres
   template:
     metadata:
       labels:
-        db: polar-postgres
+        db: polar-catalog-postgres
 
     spec:
       containers:
-        - name: polar-postgres
+        - name: polar-catalog-postgres
           image: "postgres:14.12"
           env:
             - name: POSTGRES_USER
